@@ -1,8 +1,7 @@
 name: digit_to_word
 description: Convert digits to their english word representations
-version: 0.0.1
-author:
-homepage:
+version: 1.0.0
+homepage: https://github.com/kalebhermes/digit_to_word
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
