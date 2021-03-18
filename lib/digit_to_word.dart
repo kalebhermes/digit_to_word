@@ -81,7 +81,7 @@ class DigitToWord {
   }
 
   static String _padNumber(int originalNumber) {
-    final numberFormat = NumberFormat("000000000000");
+    final numberFormat = NumberFormat('000000000000');
     return numberFormat.format(originalNumber);
   }
 
