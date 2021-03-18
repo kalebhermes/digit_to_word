@@ -18,7 +18,7 @@ Install the package then simply call `DigitToWord.translate(11345)`
 ```dart
 var num = 954;
 var numberAsString = DigitToWord.translate(num);
-print(num) /// nine hundred fifty-four
+print(numberAsString) /// nine hundred fifty-four
 ```
 
 **Note**: This package maxes out at billions. Anything over 999,999,999,999 will return an error message. 

@@ -2,17 +2,53 @@ library digit_to_word;
 
 import 'package:intl/intl.dart';
 
-const singleDigit = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
-const doubleDigit = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninty'];
-
+const _singleDigit = [
+  '',
+  'one',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+  'seven',
+  'eight',
+  'nine',
+  'ten',
+  'eleven',
+  'twelve',
+  'thirteen',
+  'fourteen',
+  'fifteen',
+  'sixteen',
+  'seventeen',
+  'eighteen',
+  'nineteen'
+];
+const _doubleDigit = [
+  '',
+  '',
+  'twenty',
+  'thirty',
+  'forty',
+  'fifty',
+  'sixty',
+  'seventy',
+  'eighty',
+  'ninty'
+];
+bool _useDash = true;
 
 class DigitToWord {
-  static translate(int number) {
+  /// Translates an integer that's less than 1 trillion to a String representation of that integer.
+  /// [number] needs to be less than 999999999999 or you'll recieve an error.
+  /// [withDashes] is an optional boolen parameter that will prevent `-` being added between the tens and ones places.
+  static String translate(int number, {bool withDashes = true}) {
+    if (withDashes == false) _useDash = false;
     var isTooLong = number > 999999999999 ? true : false;
-    if(isTooLong) {
+    if (isTooLong) {
       return 'Number has to be smaller than 999999999999';
     }
-    if(number == 0) {
+    if (number == 0) {
       return 'Zero';
     } else {
       String returnValue = '';
@@ -22,16 +58,21 @@ class DigitToWord {
       var thousands = paddedNumber.substring(6, 9);
       var hundreds = paddedNumber.substring(9);
       returnValue += _translateThreeNumbers(billions);
-      returnValue = _translateThreeNumbers(billions) != '' ? returnValue + ' billion ' : returnValue + '';
+      returnValue = _translateThreeNumbers(billions) != ''
+          ? returnValue + ' billion '
+          : returnValue + '';
       returnValue += _translateThreeNumbers(millions);
-      returnValue = _translateThreeNumbers(millions) != '' ? returnValue + ' million ' : returnValue + '';
+      returnValue = _translateThreeNumbers(millions) != ''
+          ? returnValue + ' million '
+          : returnValue + '';
       returnValue += _translateThreeNumbers(thousands);
-      returnValue = _translateThreeNumbers(thousands) != '' ? returnValue + ' thousand ' : returnValue + '';
+      returnValue = _translateThreeNumbers(thousands) != ''
+          ? returnValue + ' thousand '
+          : returnValue + '';
       returnValue += _translateThreeNumbers(hundreds);
       return returnValue;
     }
   }
-
 
   static String _padNumber(int originalNumber) {
     NumberFormat numberFormat = NumberFormat("000000000000");
@@ -42,7 +83,7 @@ class DigitToWord {
     String returnValue = '';
     List<String> numbers = number.split('');
     int parsedNumber = int.parse(number);
-    if(parsedNumber == 0) {
+    if (parsedNumber == 0) {
       return '';
     }
     returnValue += _translateHundredsPlace(numbers[0]);
@@ -53,8 +94,8 @@ class DigitToWord {
 
   static String _translateHundredsPlace(String number) {
     int parsedNumber = int.parse(number);
-    String returnValue = singleDigit[parsedNumber];
-    if(returnValue != '') {
+    String returnValue = _singleDigit[parsedNumber];
+    if (returnValue != '') {
       returnValue += ' hundred ';
     }
     return returnValue;
@@ -64,12 +105,12 @@ class DigitToWord {
     String returnValue = '';
     int parsedTens = int.parse(tens);
     int parsedOnes = int.parse(ones);
-    if(parsedTens > 1) {
-      returnValue += doubleDigit[parsedTens] + '-';
-      returnValue += singleDigit[parsedOnes];
-    }
-    else {
-      returnValue += singleDigit[(parsedTens * 10) + parsedOnes];
+    if (parsedTens > 1) {
+      returnValue += _doubleDigit[parsedTens];
+      returnValue += _useDash ? '-' : ' ';
+      returnValue += _singleDigit[parsedOnes];
+    } else {
+      returnValue += _singleDigit[(parsedTens * 10) + parsedOnes];
     }
 
     return returnValue;
