@@ -44,45 +44,51 @@ class DigitToWord {
   /// [withDashes] is an optional boolen parameter that will prevent `-` being added between the tens and ones places.
   static String translate(int number, {bool withDashes = true}) {
     if (withDashes == false) _useDash = false;
-    var isTooLong = number > 999999999999 ? true : false;
+    final isTooLong = number > 999999999999 ? true : false;
     if (isTooLong) {
       return 'Number has to be smaller than 999999999999';
     }
     if (number == 0) {
       return 'Zero';
     } else {
-      String returnValue = '';
-      String paddedNumber = _padNumber(number);
-      var billions = paddedNumber.substring(0, 3);
-      var millions = paddedNumber.substring(3, 6);
-      var thousands = paddedNumber.substring(6, 9);
-      var hundreds = paddedNumber.substring(9);
+      var returnValue = '';
+
+      final paddedNumber = _padNumber(number);
+      final billions = paddedNumber.substring(0, 3);
+      final millions = paddedNumber.substring(3, 6);
+      final thousands = paddedNumber.substring(6, 9);
+      final hundreds = paddedNumber.substring(9);
+
       returnValue += _translateThreeNumbers(billions);
       returnValue = _translateThreeNumbers(billions) != ''
           ? returnValue + ' billion '
           : returnValue + '';
+
       returnValue += _translateThreeNumbers(millions);
       returnValue = _translateThreeNumbers(millions) != ''
           ? returnValue + ' million '
           : returnValue + '';
+
       returnValue += _translateThreeNumbers(thousands);
       returnValue = _translateThreeNumbers(thousands) != ''
           ? returnValue + ' thousand '
           : returnValue + '';
+
       returnValue += _translateThreeNumbers(hundreds);
+
       return returnValue;
     }
   }
 
   static String _padNumber(int originalNumber) {
-    NumberFormat numberFormat = NumberFormat("000000000000");
+    final numberFormat = NumberFormat("000000000000");
     return numberFormat.format(originalNumber);
   }
 
   static String _translateThreeNumbers(String number) {
-    String returnValue = '';
-    List<String> numbers = number.split('');
-    int parsedNumber = int.parse(number);
+    var returnValue = '';
+    final numbers = number.split('');
+    final parsedNumber = int.parse(number);
     if (parsedNumber == 0) {
       return '';
     }
@@ -93,8 +99,8 @@ class DigitToWord {
   }
 
   static String _translateHundredsPlace(String number) {
-    int parsedNumber = int.parse(number);
-    String returnValue = _singleDigit[parsedNumber];
+    final parsedNumber = int.parse(number);
+    var returnValue = _singleDigit[parsedNumber];
     if (returnValue != '') {
       returnValue += ' hundred ';
     }
@@ -102,9 +108,9 @@ class DigitToWord {
   }
 
   static String _translateTensPlace(String tens, String ones) {
-    String returnValue = '';
-    int parsedTens = int.parse(tens);
-    int parsedOnes = int.parse(ones);
+    var returnValue = '';
+    final parsedTens = int.parse(tens);
+    final parsedOnes = int.parse(ones);
     if (parsedTens > 1) {
       returnValue += _doubleDigit[parsedTens];
       returnValue += _useDash ? '-' : ' ';
