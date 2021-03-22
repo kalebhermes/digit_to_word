@@ -44,14 +44,16 @@ class DigitToWord {
   /// [withDashes] is an optional boolen parameter that will prevent `-` being added between the tens and ones places.
   static String translate(int number, {bool withDashes = true}) {
     if (withDashes == false) _useDash = false;
-    final isTooLong = number > 9223372036854775807 ? true : false;
-    if (isTooLong) {
-      return 'Number has to be smaller than 999999999999';
+    final isOutOfBounds = number.abs() > 9223372036854775807 ? true : false;
+    if (isOutOfBounds) {
+      return 'Number has to be between -9223372036854775807 and 9223372036854775807';
     }
     if (number == 0) {
-      return 'Zero';
+      return 'zero';
     } else {
-      var returnValue = '';
+      final isNegative = number > 0 ? false : true;
+      if (isNegative) number = number.abs();
+      var returnValue = isNegative ? 'negative ' : '';
 
       final paddedNumber = _padNumber(number);
       final quintillions = paddedNumber.substring(0, 1);

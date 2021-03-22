@@ -4,8 +4,15 @@ import 'package:digit_to_word/digit_to_word.dart';
 
 void main() {
   group('digit to word converts', () {
+    test('zero', () {
+      expect(DigitToWord.translate(0), 'zero');
+    });
     test('single digit', () {
       expect(DigitToWord.translate(1).split(' '), hasLength(1));
+    });
+
+    test('negative single digit', () {
+      expect(DigitToWord.translate(-1).split(' '), hasLength(2));
     });
 
     test('double digit', () {
@@ -71,9 +78,11 @@ void main() {
           'nine quintillion two hundred twenty-three quadrillion three hundred seventy-two trillion thirty-six billion eight hundred fifty-four million seven hundred seventy-five thousand eight hundred seven');
     });
 
-        test('negative', () {
-      expect(
-          DigitToWord.translate(5213342525854785897).split(' '), hasLength(25));
+    test('negative', () {
+      expect(DigitToWord.translate(-5213342525854785897), contains('negative'));
+
+      expect(DigitToWord.translate(5213342525854785897),
+          isNot(contains('negative')));
     });
   });
 }
