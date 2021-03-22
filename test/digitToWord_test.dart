@@ -51,5 +51,29 @@ void main() {
     test('twelve digit', () {
       expect(DigitToWord.translate(987326580120).split(' '), hasLength(15));
     });
+
+    test('fifteen digit', () {
+      expect(DigitToWord.translate(987326580120487).split(' '), hasLength(19));
+    });
+
+    test('eighteen digit', () {
+      expect(
+          DigitToWord.translate(987326580120487429).split(' '), hasLength(23));
+    });
+
+    test('ningteen digit', () {
+      expect(
+          DigitToWord.translate(5213342525854785897).split(' '), hasLength(25));
+    });
+
+    test('biggest number', () {
+      expect(DigitToWord.translate(9223372036854775807),
+          'nine quintillion two hundred twenty-three quadrillion three hundred seventy-two trillion thirty-six billion eight hundred fifty-four million seven hundred seventy-five thousand eight hundred seven');
+    });
+
+        test('negative', () {
+      expect(
+          DigitToWord.translate(5213342525854785897).split(' '), hasLength(25));
+    });
   });
 }

@@ -44,7 +44,7 @@ class DigitToWord {
   /// [withDashes] is an optional boolen parameter that will prevent `-` being added between the tens and ones places.
   static String translate(int number, {bool withDashes = true}) {
     if (withDashes == false) _useDash = false;
-    final isTooLong = number > 999999999999 ? true : false;
+    final isTooLong = number > 9223372036854775807 ? true : false;
     if (isTooLong) {
       return 'Number has to be smaller than 999999999999';
     }
@@ -54,10 +54,28 @@ class DigitToWord {
       var returnValue = '';
 
       final paddedNumber = _padNumber(number);
-      final billions = paddedNumber.substring(0, 3);
-      final millions = paddedNumber.substring(3, 6);
-      final thousands = paddedNumber.substring(6, 9);
-      final hundreds = paddedNumber.substring(9);
+      final quintillions = paddedNumber.substring(0, 1);
+      final quadrillions = paddedNumber.substring(1, 4);
+      final trillions = paddedNumber.substring(4, 7);
+      final billions = paddedNumber.substring(7, 10);
+      final millions = paddedNumber.substring(10, 13);
+      final thousands = paddedNumber.substring(13, 16);
+      final hundreds = paddedNumber.substring(16);
+
+      returnValue += _translateOnesPlace(quintillions);
+      returnValue = _translateOnesPlace(quintillions) != ''
+          ? returnValue + ' quintillion '
+          : returnValue + '';
+
+      returnValue += _translateThreeNumbers(quadrillions);
+      returnValue = _translateThreeNumbers(quadrillions) != ''
+          ? returnValue + ' quadrillion '
+          : returnValue + '';
+
+      returnValue += _translateThreeNumbers(trillions);
+      returnValue = _translateThreeNumbers(trillions) != ''
+          ? returnValue + ' trillion '
+          : returnValue + '';
 
       returnValue += _translateThreeNumbers(billions);
       returnValue = _translateThreeNumbers(billions) != ''
@@ -81,7 +99,7 @@ class DigitToWord {
   }
 
   static String _padNumber(int originalNumber) {
-    final numberFormat = NumberFormat('000000000000');
+    final numberFormat = NumberFormat('0000000000000000000');
     return numberFormat.format(originalNumber);
   }
 
@@ -120,5 +138,10 @@ class DigitToWord {
     }
 
     return returnValue;
+  }
+
+  static String _translateOnesPlace(String ones) {
+    final parsedOnes = int.parse(ones);
+    return _singleDigit[parsedOnes];
   }
 }
