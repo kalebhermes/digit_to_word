@@ -47,7 +47,7 @@ class DigitToWord {
     final maxNumber = double.maxFinite.toInt();
     final isOutOfBounds = number.abs() > maxNumber ? true : false;
     if (isOutOfBounds) {
-      return 'Number has to be between -$maxNumber and $maxNumber';
+      return 'Number has to be between -$maxNumber and $maxNumber. These numbers are dependent on the platform you\'re running on.';
     }
     if (number == 0) {
       return 'zero';

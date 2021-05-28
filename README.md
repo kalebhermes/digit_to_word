@@ -20,5 +20,3 @@ var num = 954;
 var numberAsString = DigitToWord.translate(num);
 print(numberAsString) /// nine hundred fifty-four
 ```
-
-**Note**: This package maxes out at 9223372036854775807. This is the largest integer that can be represented by 64 bits.
