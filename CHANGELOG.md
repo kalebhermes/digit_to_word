@@ -1,3 +1,7 @@
+## [1.2.1] - Release v 1.2.1
+
+* Update max value to be platform specific, Web can't handle 64 bit integers
+
 ## [1.2.0] - Release v 1.2.0
 
 * Up max value to 64 bit integer max, also add negative support
