@@ -44,9 +44,10 @@ class DigitToWord {
   /// [withDashes] is an optional boolen parameter that will prevent `-` being added between the tens and ones places.
   static String translate(int number, {bool withDashes = true}) {
     if (withDashes == false) _useDash = false;
-    final isOutOfBounds = number.abs() > 9223372036854775807 ? true : false;
+    final maxNumber = double.maxFinite.toInt();
+    final isOutOfBounds = number.abs() > maxNumber ? true : false;
     if (isOutOfBounds) {
-      return 'Number has to be between -9223372036854775807 and 9223372036854775807';
+      return 'Number has to be between -$maxNumber and $maxNumber';
     }
     if (number == 0) {
       return 'zero';
